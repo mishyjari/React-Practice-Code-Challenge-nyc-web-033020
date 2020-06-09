@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import SushiContainer from './containers/SushiContainer';
 import Table from './containers/Table';
+import Atm from './components/Atm.js'
 
 // Endpoint!
 const API = "http://localhost:3000/sushis"
@@ -43,12 +44,19 @@ class App extends Component {
   	  	 }
   }
 
+	handleAddMoney = e => {
+		e.preventDefault();
+		const val = Number(e.target.funds.value);
+		this.setState(prevState => ({ tableMoney: prevState.tableMoney + val }))
+		e.target.reset();
+	}
+
   render() {
-  	  console.log(this.state)
     return (
       <div className="app">
         <SushiContainer sushis={this.returnFourSushis()} showMore={this.handleShowMore} handleEat={this.handleEatSushi} />
         <Table tableItems={this.state.tableItems} money={this.state.tableMoney} />
+        <Atm withdraw={this.handleAddMoney} />
       </div>
     );
   }
